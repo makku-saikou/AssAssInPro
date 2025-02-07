@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Remains
   m_EditorClassIdentifier: 
   id: 5
-  hp: 70
+  hp: 80
   weight: 12
-  energy: 125
+  energy: 100
   prototype: {fileID: 5879413710637086575, guid: ed485a36bd3f2b14495956fa0ea33129, type: 3}
   portraitBlue: {fileID: -1821356742, guid: 0cce3b4f0a50dcd49a8a1613514bc2d4, type: 3}
   portraitYellow: {fileID: 1757063137, guid: db440530849dac5468185f9a4f6ab61c, type: 3}
