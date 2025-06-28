@@ -1,4 +1,5 @@
-﻿using PurpleFlowerCore.Utility;
+﻿using PurpleFlowerCore;
+using PurpleFlowerCore.Utility;
 using UnityEngine;
 
 namespace Pditine.GamePlay.Buff

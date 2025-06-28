@@ -1,4 +1,5 @@
 ﻿using Pditine.Data.GameModule;
+using PurpleFlowerCore;
 using PurpleFlowerCore.Utility;
 using UnityEngine;
 

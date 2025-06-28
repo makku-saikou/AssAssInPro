@@ -1,4 +1,5 @@
 ﻿using Org.BouncyCastle.Pqc.Crypto.Ntru;
+using PurpleFlowerCore;
 using PurpleFlowerCore.Utility;
 using Sirenix.OdinInspector;
 using UnityEngine;

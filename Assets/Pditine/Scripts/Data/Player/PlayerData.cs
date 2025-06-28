@@ -4,6 +4,7 @@
 // Date: 2024_12_05
 // -------------------------------------------------
 
+using PurpleFlowerCore;
 using PurpleFlowerCore.Utility;
 using UnityEngine;
 
