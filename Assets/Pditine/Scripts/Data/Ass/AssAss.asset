@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 3
   hp: 100
   weight: 21
-  energy: 125
+  energy: 100
   prototype: {fileID: 5879413710637086575, guid: 505578b467eec7e438c399d0bdaf2b43, type: 3}
   portraitBlue: {fileID: 543358383, guid: 724128b1a2ce3824f9a91c59c988f532, type: 3}
   portraitYellow: {fileID: 468548099, guid: 68cf26033ad56c24895737460f31bdbf, type: 3}

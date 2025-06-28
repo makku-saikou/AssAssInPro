@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Giant
   m_EditorClassIdentifier: 
   id: 2
-  hp: 150
+  hp: 140
   weight: 55
-  energy: 125
+  energy: 100
   prototype: {fileID: 5879413710637086575, guid: 58985701c94d65a48970bec447d8e08a, type: 3}
   portraitBlue: {fileID: -1293628946, guid: c00b3f7caf6a35c4e9008442d4702fd9, type: 3}
   portraitYellow: {fileID: -1392292784, guid: fcd6213bb15e58f47905d2a31bd637a7, type: 3}

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: LittleAss
   m_EditorClassIdentifier: 
   id: 1
-  hp: 70
+  hp: 65
   weight: 8
-  energy: 80
+  energy: 60
   prototype: {fileID: 5879413710637086575, guid: da6437d2c84b5e0498f1afce66231f70, type: 3}
   portraitBlue: {fileID: -1293628946, guid: 9476abcf734681d4b8c35e9fcb791e38, type: 3}
   portraitYellow: {fileID: 1434998514, guid: 95b36a93ed191f147b7c6024f36f4e2a, type: 3}

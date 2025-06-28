@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battery: 25
   energyRecoverSpeed: 50
-  recoverCD: 0.25
+  recoverCD: 0.23
   rotateSpeed: 0.4
   keyboardRotateSpeed: 0.05
