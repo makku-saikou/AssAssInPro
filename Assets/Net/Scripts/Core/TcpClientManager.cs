@@ -196,6 +196,7 @@ namespace Net.Scripts.Core
 
 		#region API
 
+		[Button]
 		public void SendMessage(INetworkMessage message)
 		{
 			if (!IsConnected)
@@ -231,6 +232,12 @@ namespace Net.Scripts.Core
 					Debug.Log($"Received TestMessage: {testMessage.IntMessage}");
 					Debug.Log($"Received TestMessage: {testMessage.StringMessage}");
 					Debug.Log($"Received TestMessage: {testMessage.FloatMessage}");
+					break;
+				case TestMessage0 testMessage0:
+					Debug.Log(testMessage0.i);
+					break;
+				case TestMessage1 testMessage1:
+					Debug.Log("没有该房间");
 					break;
 			}
 		}
