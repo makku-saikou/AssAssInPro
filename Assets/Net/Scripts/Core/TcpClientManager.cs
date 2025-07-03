@@ -226,20 +226,7 @@ namespace Net.Scripts.Core
 
 		private static void ProcessReceivedMessage(INetworkMessage message)
 		{
-			switch (message)
-			{
-				case TestMessage testMessage:
-					Debug.Log($"Received TestMessage: {testMessage.IntMessage}");
-					Debug.Log($"Received TestMessage: {testMessage.StringMessage}");
-					Debug.Log($"Received TestMessage: {testMessage.FloatMessage}");
-					break;
-				case TestMessage0 testMessage0:
-					Debug.Log(testMessage0.i);
-					break;
-				case TestMessage1 testMessage1:
-					Debug.Log("没有该房间");
-					break;
-			}
+			MessageProcessing.Dispatch(message);
 		}
 
 		#endregion
