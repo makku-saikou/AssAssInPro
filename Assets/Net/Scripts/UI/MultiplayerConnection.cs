@@ -1,5 +1,6 @@
 ﻿using Hmxs.Toolkit.Flow.Timer;
 using Hmxs.Toolkit.Module.Events;
+using Mirror.Examples.MultipleMatch;
 using Net.Scripts.Core;
 using Net.Scripts.Messages;
 using Sirenix.OdinInspector;
@@ -20,7 +21,7 @@ namespace Net.Scripts.UI
 		private void Start()
 		{
 			joinGameButton.onClick.AddListener(JoinGame);
-			Events.AddListener<S2CMessages.JoinGameResponse>(MessageEvents.JoinGameResponse, HandleJoinGameResponse);
+			Events.AddListener<ResponseJoinGame>(MessageEvents.JoinGameResponse, HandleJoinGameResponse);
 		}
 
 		private void JoinGame()
@@ -28,7 +29,8 @@ namespace Net.Scripts.UI
 			if (!TcpClientManager.Instance.IsConnected || isJoiningGame) return;
 
 			Debug.Log("Try joining game...");
-			var joinGameMessage = new C2SMessages.JoinGameRequest();
+			var joinGameMessage = new RequestJoinGame();
+			Debug.Log(joinGameMessage.MessageId);
 			TcpClientManager.Instance.SendMessage(joinGameMessage);
 
 			loadingMask.SetActive(true);
@@ -41,7 +43,7 @@ namespace Net.Scripts.UI
 			});
 		}
 
-		private void HandleJoinGameResponse(S2CMessages.JoinGameResponse response)
+		private void HandleJoinGameResponse(ResponseJoinGame response)
 		{
 			if (!response.Success)
 			{
@@ -58,7 +60,7 @@ namespace Net.Scripts.UI
 			loadingMask.SetActive(false);
 			joinGameButton.gameObject.SetActive(false);
 			joinGameButton.interactable = true;
-			if (response.PlayerId == 0) leftMask.SetActive(false);
+			if (response.PlayerId == 1) leftMask.SetActive(false);
 			else rightMask.SetActive(false);
 		}
 	}

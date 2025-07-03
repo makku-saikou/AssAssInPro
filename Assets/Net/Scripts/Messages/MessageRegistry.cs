@@ -10,8 +10,7 @@ namespace Net.Scripts.Messages
 	{
 		private static readonly Dictionary<int, Func<INetworkMessage>> Registry = new();
 
-		static MessageRegistry() => Initialize();
-
+		[RuntimeInitializeOnLoadMethod]
 		private static void Initialize()
 		{
 			Registry.Clear();

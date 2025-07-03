@@ -8,7 +8,7 @@ namespace Net.Scripts.Messages
 		{
 			switch (message)
 			{
-				case S2CMessages.JoinGameResponse joinGameResponse:
+				case ResponseJoinGame joinGameResponse:
 					Events.Trigger(MessageEvents.JoinGameResponse, joinGameResponse);
 					break;
 			}

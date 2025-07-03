@@ -27,6 +27,7 @@ namespace Hmxs.Toolkit.Base.Singleton
                     if (_instance) return _instance;
                     var singletonObject = new GameObject($"{typeof(T).Name}_SingletonMono");
                     _instance = singletonObject.AddComponent<T>();
+                    Debug.Log($"{typeof(T).Name}_SingletonMono has been created.");
                 }
                 return _instance;
             }

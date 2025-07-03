@@ -19,6 +19,7 @@ namespace Net.Scripts.UI
 
 		private void Start()
 		{
+			TcpClientManager.Instance.Connect();
 			_button = GetComponent<Button>();
 			_button.onClick.AddListener(() =>
 			{
