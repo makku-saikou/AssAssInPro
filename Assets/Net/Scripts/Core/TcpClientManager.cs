@@ -69,13 +69,13 @@ namespace Net.Scripts.Core
 				catch (Exception e)
 				{
 					Debug.LogError($"Failed to connect: {e.Message}");
-					HandleDisconnection();
+					Disconnect();
 				}
 			}
 			catch (Exception e)
 			{
 				Debug.LogError($"Error during connection: {e.Message}");
-				HandleDisconnection();
+				Disconnect();
 			}
 		}
 
@@ -83,11 +83,7 @@ namespace Net.Scripts.Core
 		public void Disconnect()
 		{
 			if (!IsConnected) return;
-			HandleDisconnection();
-		}
-
-		private void HandleDisconnection()
-		{
+			
 			_cancellationTokenSource?.Cancel();
 			_stream?.Close();
 			_client?.Close();
@@ -124,7 +120,7 @@ namespace Net.Scripts.Core
 					catch (Exception e)
 					{
 						Debug.LogError($"Send error: {e.Message}");
-						HandleDisconnection();
+						Disconnect();
 						break;
 					}
 					finally
@@ -174,7 +170,7 @@ namespace Net.Scripts.Core
 				catch (Exception e)
 				{
 					Debug.LogError($"Receive error: {e.Message}");
-					HandleDisconnection();
+					Disconnect();
 					break;
 				}
 			}
