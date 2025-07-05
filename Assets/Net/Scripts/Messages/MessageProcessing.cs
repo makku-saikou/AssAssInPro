@@ -25,6 +25,9 @@ namespace Net.Scripts.Messages
 					Debug.Log($"{playerState.PlayerId}, {playerState.Position}, {playerState.Rotation}, {playerState.Scale}");
 					Events.Trigger(NetEvents.PlayerState, playerState);
 					break;
+				case C2CPlayerHP playerHP:
+					Events.Trigger(NetEvents.PlayerHP, playerHP);
+					break;
 				default:
 					Debug.LogWarning("Undispatched message type: " + message.GetType());
 					break;
