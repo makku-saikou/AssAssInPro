@@ -9,7 +9,7 @@ namespace Net.Scripts.Client
 {
     public class PlayerStateSender : MonoBehaviour
     {
-        [SerializeField] private float fixedFps = 30f;
+        [SerializeField] private float fixedFps = 60f;
         
         private Transform _player;
         private int _playerID;
