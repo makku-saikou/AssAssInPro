@@ -7,9 +7,9 @@ namespace Net.Scripts.Client
 {
     public class PlayerInputSender : MonoBehaviour
     {
-        private PlayerController _player;
+        private NetPlayerController _player;
 
-        public void Init(PlayerController player)
+        public void Init(NetPlayerController player)
         {
             if (!player)
             {

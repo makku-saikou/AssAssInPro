@@ -167,7 +167,6 @@ namespace Pditine.Player
         public event Action OnDestroyed;
         public Action<Vector3> OnChangeCurrentDirection;
 
-        public event Action<Vector2, float> OnDash; 
         
         #endregion
 
@@ -291,7 +290,6 @@ namespace Pditine.Player
             CurrentSpeed = CalculateSpeed();
             _currentBattery = 0;
             _currentRecoverCD = RecoverCD;
-            OnDash?.Invoke(_currentDirection, CurrentSpeed);
         }
         
         protected void RecoverEnergy()
