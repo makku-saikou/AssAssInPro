@@ -16,6 +16,7 @@ using PurpleFlowerCore;
 using Sirenix.Utilities;
 using Unity.VisualScripting;
 using UnityEngine;
+using Timer = Hmxs.Toolkit.Flow.Timer.Timer;
 
 namespace Net.Scripts
 {
@@ -129,7 +130,7 @@ namespace Net.Scripts
 
         private void GameOverCallback(S2CGameOver _)
         {
-            SceneSystem.LoadScene(0);
+            Timer.Register(2f, () => SceneSystem.LoadScene(0));
         }
     }
 }
