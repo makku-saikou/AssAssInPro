@@ -335,6 +335,17 @@ namespace Pditine.Player
             OnChangeHP?.Invoke(_currentHP, ID);
         }
 
+        public void SetHP(float hp)
+        {
+            if (hp < 0 && isInvincible)
+            {
+                return;
+            }
+            _currentHP = hp;
+            if (_currentHP > HP) _currentHP = HP;
+            OnChangeHP?.Invoke(_currentHP, ID);
+        }
+
         public void BeDestroy()
         {
             canMove = false;

@@ -56,4 +56,22 @@ namespace Net.Scripts.Messages
 			Scale = buffer.ReadVector2();
 		}
 	}
+
+	public class C2CPlayerHP : INetworkMessage
+	{
+		public int MessageId => 3003;
+		public int PlayerId;
+		public float CurrentHP;
+		public void Serialize(ByteBuffer buffer)
+		{
+			buffer.WriteInt(PlayerId);
+			buffer.WriteFloat(CurrentHP);
+		}
+
+		public void Deserialize(ByteBuffer buffer)
+		{
+			PlayerId = buffer.ReadInt();
+			CurrentHP = buffer.ReadFloat();
+		}
+	}
 }

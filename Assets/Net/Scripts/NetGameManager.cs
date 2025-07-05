@@ -1,10 +1,18 @@
+using System;
+using System.Linq;
 using Hmxs.Scripts;
+using Hmxs.Toolkit.Module.Events;
+using MoreMountains.Feedbacks;
 using Net.Scripts.Client;
+using Net.Scripts.Core;
+using Net.Scripts.Messages;
 using Pditine.Data;
+using Pditine.GamePlay.UI;
 using Pditine.Player;
 using Pditine.Player.Ass;
 using Pditine.Player.Thorn;
 using Pditine.Scripts.Data.DatePassing;
+using Sirenix.Utilities;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,6 +24,7 @@ namespace Net.Scripts
         public int ClientID => PassingData.netPlayerID;
         [SerializeField] private NetPlayerController player1;
         [SerializeField] private NetPlayerController player2;
+        [SerializeField] protected MMF_Player startEffect;
         public void Start()
         {
             Init();
@@ -36,9 +45,14 @@ namespace Net.Scripts
                 player1.InputHandler = inputHandler;
                 player2.AddComponent<PlayerStateSender>().Init(player2.transform, 2);
                 player2.AddComponent<PlayerInputReceiver>().Init(player2);
+                player1.OnChangeHP += PlayerHPSendCallback;
+                player2.OnChangeHP += PlayerHPSendCallback;
             }
             else
             {
+                player1.GetComponents<Collider2D>().ForEach(c => c.enabled = false);
+                player2.GetComponents<Collider2D>().ForEach(c => c.enabled = false);
+                
                 player1.AddComponent<PlayerStateReceiver>().Init(player1.transform, 1);
                 player2.AddComponent<PlayerStateReceiver>().Init(player2.transform, 2);
                 player2.AddComponent<PlayerInputSender>().Init(player2);
@@ -47,14 +61,48 @@ namespace Net.Scripts
             }
             //
             // BuffManager.Instance.Init(player1,player2);
-            // UIManager.Instance.Init(player1,player2);
+            UIManager.Instance.Init(player1,player2);
             
-            // startEffect.PlayFeedbacks();
+            startEffect.PlayFeedbacks();
             // DelayUtility.Delay(4.7f,()=>
             // {
             //     PlayerCanMove(true);
             //     PlayerManager.Instance.SwitchMap("GamePlay");
             // });
+        }
+
+        private void OnEnable()
+        {
+            if(ClientID == 2)
+                Events.AddListener<C2CPlayerHP>(NetEvents.PlayerHP,  PlayerHPReceiveCallback); 
+        }
+        
+        private void OnDisable()
+        {
+            if(ClientID == 2)
+                Events.RemoveListener<C2CPlayerHP>(NetEvents.PlayerHP, PlayerHPReceiveCallback);
+        }
+
+        private void PlayerHPSendCallback(float currentHP, int playerID)
+        {
+            var msg = new C2CPlayerHP
+            {
+                PlayerId = playerID,
+                CurrentHP = currentHP
+            };
+            TcpClientManager.Instance.SendMessage(msg);
+        }
+        
+        private void PlayerHPReceiveCallback(C2CPlayerHP msg)
+        {
+            if (msg.PlayerId == 1)
+            {
+                player1.SetHP(msg.CurrentHP);
+            }
+            else if (msg.PlayerId == 2)
+            {
+                player2.SetHP(msg.CurrentHP);
+            }
         }
         
         protected virtual void CreatePlayer(int assID,int thornID,PlayerController thePlayer)
