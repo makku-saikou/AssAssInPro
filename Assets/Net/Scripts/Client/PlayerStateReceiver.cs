@@ -49,9 +49,9 @@ namespace Net.Scripts.Client
             // _targetPosition = msg.Position;
             // _targetRotation = msg.Rotation;
             // _targetScale = msg.Scale;
-            _player.position = _targetPosition;
-            _player.rotation = _targetRotation;
-            _player.localScale = _targetScale;
+            _player.position = msg.Position;
+            _player.rotation = msg.Rotation;
+            _player.localScale = msg.Scale;
             Debug.Log($"Player {_playerId} state updated: Position={_targetPosition}, Rotation={_targetRotation}, Scale={_targetScale}");
         }
     }
