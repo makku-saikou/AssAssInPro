@@ -12,6 +12,7 @@ using Pditine.Player;
 using Pditine.Player.Ass;
 using Pditine.Player.Thorn;
 using Pditine.Scripts.Data.DatePassing;
+using PurpleFlowerCore;
 using Sirenix.Utilities;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -64,6 +65,8 @@ namespace Net.Scripts
             UIManager.Instance.Init(player1,player2);
             
             startEffect.PlayFeedbacks();
+            player1.OnChangeHP += CheckPlayerDead;
+            player2.OnChangeHP += CheckPlayerDead;
             // DelayUtility.Delay(4.7f,()=>
             // {
             //     PlayerCanMove(true);
@@ -114,6 +117,13 @@ namespace Net.Scripts
             thePlayer.Init(theThorn,theAss); // 保证先初始化PlayerController
             theAss.Init(thePlayer);
             theThorn.Init(thePlayer);
+        }
+
+        private void CheckPlayerDead(float hp, int playerID)
+        {
+            if (hp > 0) return;
+            SceneSystem.LoadScene(0);
+            TcpClientManager.Instance.Disconnect();
         }
     }
 }
