@@ -210,7 +210,7 @@ namespace Pditine.Player
             if (InputHandler.Dash)
             {
                 Dash();
-                OnDash?.Invoke(CurrentDirection, CurrentSpeed);
+                OnDash?.Invoke(InputDirection, CalculateSpeed());
             }
             if (InputHandler.Charge) 
                 Charge(); 
