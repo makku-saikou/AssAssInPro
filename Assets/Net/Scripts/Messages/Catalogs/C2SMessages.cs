@@ -2,7 +2,7 @@
 
 namespace Net.Scripts.Messages
 {
-	public class RequestJoinGame : INetworkMessage
+	public class C2SJoinGame : INetworkMessage
 	{
 		public int MessageId => 1001;
 

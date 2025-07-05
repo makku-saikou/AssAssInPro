@@ -1,7 +1,5 @@
-﻿using System;
-using Hmxs.Toolkit.Flow.Timer;
+﻿using Hmxs.Toolkit.Flow.Timer;
 using Hmxs.Toolkit.Module.Events;
-using Mirror.Examples.MultipleMatch;
 using Net.Scripts.Core;
 using Net.Scripts.Messages;
 using PurpleFlowerCore;
@@ -17,21 +15,23 @@ namespace Net.Scripts.UI
 		[SerializeField] private GameObject leftMask;
 		[SerializeField] private GameObject rightMask;
 		[SerializeField] private GameObject loadingMask;
+		[SerializeField] private GameObject player1Text;
+		[SerializeField] private GameObject player2Text;
 		[SerializeField] private float loadingTimeout = 10f;
 		[SerializeField] [ReadOnly] private bool isJoiningGame;
 
 		private void OnEnable()
 		{
-			Events.AddListener<S2CJoinGame>(MessageEvents.JoinGameResponse, S2CJoinGameCallback);
-			Events.AddListener<S2CGameEstablished>(MessageEvents.GameEstablished, S2CGameEstablishedCallback);
-			Events.AddListener<S2CGameStart>(MessageEvents.GameStart, S2CGameStartCallback);
+			Events.AddListener<S2CJoinGame>(NetEvents.JoinGameResponse, S2CJoinGameCallback);
+			Events.AddListener<S2CGameEstablished>(NetEvents.GameEstablished, S2CGameEstablishedCallback);
+			Events.AddListener<S2CGameStart>(NetEvents.GameStart, S2CGameStartCallback);
 		}
 
 		private void OnDisable()
 		{
-			Events.RemoveListener<S2CJoinGame>(MessageEvents.JoinGameResponse, S2CJoinGameCallback);
-			Events.RemoveListener<S2CGameEstablished>(MessageEvents.GameEstablished, S2CGameEstablishedCallback);
-			Events.RemoveListener<S2CGameStart>(MessageEvents.GameStart, S2CGameStartCallback);
+			Events.RemoveListener<S2CJoinGame>(NetEvents.JoinGameResponse, S2CJoinGameCallback);
+			Events.RemoveListener<S2CGameEstablished>(NetEvents.GameEstablished, S2CGameEstablishedCallback);
+			Events.RemoveListener<S2CGameStart>(NetEvents.GameStart, S2CGameStartCallback);
 		}
 
 		private void Start() => joinGameButton.onClick.AddListener(JoinGame);
@@ -41,7 +41,7 @@ namespace Net.Scripts.UI
 			if (!TcpClientManager.Instance.IsConnected || isJoiningGame) return;
 
 			Debug.Log("Try joining game...");
-			var joinGameMessage = new RequestJoinGame();
+			var joinGameMessage = new C2SJoinGame();
 			Debug.Log(joinGameMessage.MessageId);
 			TcpClientManager.Instance.SendMessage(joinGameMessage);
 
@@ -65,6 +65,8 @@ namespace Net.Scripts.UI
 				joinGameButton.interactable = true;
 				leftMask.SetActive(true);
 				rightMask.SetActive(true);
+				player1Text.SetActive(false);
+				player2Text.SetActive(false);
 				Debug.LogWarning("Failed to join game.");
 				return;
 			}
@@ -72,8 +74,16 @@ namespace Net.Scripts.UI
 			loadingMask.SetActive(false);
 			joinGameButton.gameObject.SetActive(false);
 			joinGameButton.interactable = true;
-			if (s2C.PlayerId == 1) leftMask.SetActive(false);
-			else rightMask.SetActive(false);
+			if (s2C.PlayerId == 1)
+			{
+				leftMask.SetActive(false);
+				player1Text.SetActive(true);
+			}
+			else
+			{
+				rightMask.SetActive(false);
+				player2Text.SetActive(true);
+			}
 		}
 
 		private void S2CGameEstablishedCallback(S2CGameEstablished s2C)
@@ -81,6 +91,8 @@ namespace Net.Scripts.UI
 			Debug.Log("Game established.");
 			leftMask.SetActive(false);
 			rightMask.SetActive(false);
+			player1Text.SetActive(true);
+			player2Text.SetActive(true);
 		}
 
 		private void S2CGameStartCallback(S2CGameStart s2C)

@@ -144,7 +144,7 @@ namespace Net.Scripts.Core
 				{
 					await ReadExactlyAsync(lengthBuffer, 0, 4, token); // read length
 					int messageLength = BitConverter.ToInt32(lengthBuffer, 0);
-					Debug.Log("receive bytes:" + messageLength);
+					Debug.Log("Receive Bytes: " + messageLength);
 					var messageBuffer = new byte[messageLength];
 					await ReadExactlyAsync(messageBuffer, 0, messageLength, token); // read message based on length
 					// deserialize message
