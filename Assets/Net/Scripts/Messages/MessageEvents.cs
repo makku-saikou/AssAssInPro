@@ -2,6 +2,8 @@
 {
 	public static class MessageEvents
 	{
-		public const string JoinGameResponse = "JoinGameResponse";
+		public const string JoinGameResponse = "JoinNetGameResponse";
+		public const string GameEstablished = "NetGameEstablished";
+		public const string GameStart = "NetGameStart";
 	}
 }

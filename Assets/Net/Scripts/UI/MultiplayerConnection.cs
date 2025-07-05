@@ -1,8 +1,10 @@
-﻿using Hmxs.Toolkit.Flow.Timer;
+﻿using System;
+using Hmxs.Toolkit.Flow.Timer;
 using Hmxs.Toolkit.Module.Events;
 using Mirror.Examples.MultipleMatch;
 using Net.Scripts.Core;
 using Net.Scripts.Messages;
+using PurpleFlowerCore;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,11 +20,21 @@ namespace Net.Scripts.UI
 		[SerializeField] private float loadingTimeout = 10f;
 		[SerializeField] [ReadOnly] private bool isJoiningGame;
 
-		private void Start()
+		private void OnEnable()
 		{
-			joinGameButton.onClick.AddListener(JoinGame);
-			Events.AddListener<ResponseJoinGame>(MessageEvents.JoinGameResponse, HandleJoinGameResponse);
+			Events.AddListener<S2CJoinGame>(MessageEvents.JoinGameResponse, S2CJoinGameCallback);
+			Events.AddListener<S2CGameEstablished>(MessageEvents.GameEstablished, S2CGameEstablishedCallback);
+			Events.AddListener<S2CGameStart>(MessageEvents.GameStart, S2CGameStartCallback);
 		}
+
+		private void OnDisable()
+		{
+			Events.RemoveListener<S2CJoinGame>(MessageEvents.JoinGameResponse, S2CJoinGameCallback);
+			Events.RemoveListener<S2CGameEstablished>(MessageEvents.GameEstablished, S2CGameEstablishedCallback);
+			Events.RemoveListener<S2CGameStart>(MessageEvents.GameStart, S2CGameStartCallback);
+		}
+
+		private void Start() => joinGameButton.onClick.AddListener(JoinGame);
 
 		private void JoinGame()
 		{
@@ -43,9 +55,9 @@ namespace Net.Scripts.UI
 			});
 		}
 
-		private void HandleJoinGameResponse(ResponseJoinGame response)
+		private void S2CJoinGameCallback(S2CJoinGame s2C)
 		{
-			if (!response.Success)
+			if (!s2C.Success)
 			{
 				isJoiningGame = false;
 				loadingMask.SetActive(false);
@@ -60,8 +72,22 @@ namespace Net.Scripts.UI
 			loadingMask.SetActive(false);
 			joinGameButton.gameObject.SetActive(false);
 			joinGameButton.interactable = true;
-			if (response.PlayerId == 1) leftMask.SetActive(false);
+			if (s2C.PlayerId == 1) leftMask.SetActive(false);
 			else rightMask.SetActive(false);
+		}
+
+		private void S2CGameEstablishedCallback(S2CGameEstablished s2C)
+		{
+			Debug.Log("Game established.");
+			leftMask.SetActive(false);
+			rightMask.SetActive(false);
+		}
+
+		private void S2CGameStartCallback(S2CGameStart s2C)
+		{
+			Debug.Log("Game started.");
+			SceneSystem.LoadScene(10);
+			// Additional logic for game start can be added here
 		}
 	}
 }

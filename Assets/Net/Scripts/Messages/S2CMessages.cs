@@ -2,7 +2,7 @@
 
 namespace Net.Scripts.Messages
 {
-	public class ResponseJoinGame : INetworkMessage
+	public class S2CJoinGame : INetworkMessage
 	{
 		public int MessageId => 2001;
 		public bool Success;
@@ -20,4 +20,20 @@ namespace Net.Scripts.Messages
 			PlayerId = buffer.ReadInt();
 		}
 	}
+
+	public class S2CGameEstablished : INetworkMessage
+	{
+		public int MessageId => 2002;
+		public void Serialize(ByteBuffer buffer) { }
+		public void Deserialize(ByteBuffer buffer) { }
+	}
+
+	public class S2CGameStart : INetworkMessage
+	{
+		public int MessageId => 2003;
+		public void Serialize(ByteBuffer buffer) { }
+		public void Deserialize(ByteBuffer buffer) { }
+	}
+
+
 }
