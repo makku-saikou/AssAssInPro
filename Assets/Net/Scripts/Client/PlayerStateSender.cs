@@ -1,17 +1,28 @@
+using System;
 using Net.Scripts.Core;
 using Net.Scripts.Messages;
 using Pditine.Data;
+using Pditine.Player;
 using UnityEngine;
 
 namespace Net.Scripts.Client
 {
     public class PlayerStateSender : MonoBehaviour
     {
+        [SerializeField] private float fixedFps = 30f;
+        
         private Transform _player;
         private int _playerID;
+        
+        private float _accumulatedTime;
+        private float TargetDeltaTime => 1f / fixedFps;
 
         private void LateUpdate()
         {
+            _accumulatedTime += Time.deltaTime;
+            if (_accumulatedTime < TargetDeltaTime) return;
+            _accumulatedTime -= TargetDeltaTime;
+            
             var msg = new C2CPlayerState
             {
                 PlayerId = _playerID,
