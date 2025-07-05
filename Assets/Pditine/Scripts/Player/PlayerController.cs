@@ -61,19 +61,19 @@ namespace Pditine.Player
         [Inspectable]private float _currentEnergy;
         public float CurrentEnergy => _currentEnergy;
         
-        private bool _chargeDone;
+        protected bool _chargeDone;
         protected bool ChargeDone => _chargeDone;
 
-        [Inspectable]private float _currentBattery;
+        [Inspectable]protected float _currentBattery;
         public float CurrentBattery => _currentBattery;
         
-        private float EnergyRecoverSpeed => Data.energyRecoverSpeed;
-        private float Battery => Data.battery;
-        private float RotateSpeed => Data.rotateSpeed;
+        protected float EnergyRecoverSpeed => Data.energyRecoverSpeed;
+        protected float Battery => Data.battery;
+        protected float RotateSpeed => Data.rotateSpeed;
         
         [HideInInspector][Inspectable] public float CurrentSpeed;
         protected Vector2 InputDirection;
-        [ReadOnly] private Vector2 _currentDirection;
+        [ReadOnly] protected Vector2 _currentDirection;
 
         public Vector2 CurrentDirection
         {
@@ -96,9 +96,20 @@ namespace Pditine.Player
         public ThornBase TheThorn => _theThorn;
         private AssBase _theAss;
         public AssBase TheAss => _theAss;
-
-        public InputHandler InputHandler =>
-            id == 1 ? PlayerManager.Instance.Handler1 : PlayerManager.Instance.Handler2;
+        private InputHandler _inputHandler;
+        public InputHandler InputHandler
+        {
+            get
+            {
+                if (!_inputHandler)
+                {
+                    _inputHandler= id == 1 ? PlayerManager.Instance.Handler1 : PlayerManager.Instance.Handler2;
+                }
+                return _inputHandler;
+            }
+            set => _inputHandler = value;
+        }
+            
 
         /// <summary>
         /// 用于操作表现上的玩家Scale和Rotation等变化,考虑封装
@@ -125,19 +136,19 @@ namespace Pditine.Player
         
         [ReadOnly] public bool canMove;
         [ReadOnly] public bool isInvincible;
-        private bool _isPause;
+        protected bool _isPause;
         public bool IsPause => _isPause;
 
         //todo:重构对scale的操作
         [HideInInspector] public float targetScale;
 
         //todo:临时添加的标记
-        [SerializeField] private bool isAI;
+        [SerializeField] protected bool isAI;
         public bool IsAI => isAI;
         
-        private float RecoverCD => Data.recoverCD;
+        protected float RecoverCD => Data.recoverCD;
 
-        private float _currentRecoverCD;
+        protected float _currentRecoverCD;
         
         #endregion
 
@@ -155,6 +166,8 @@ namespace Pditine.Player
         public event Action<float, int> OnChangeHP; // 当前血量 玩家id
         public event Action OnDestroyed;
         public Action<Vector3> OnChangeCurrentDirection;
+
+        public event Action<Vector2, float> OnDash; 
         
         #endregion
 
@@ -278,6 +291,7 @@ namespace Pditine.Player
             CurrentSpeed = CalculateSpeed();
             _currentBattery = 0;
             _currentRecoverCD = RecoverCD;
+            OnDash?.Invoke(_currentDirection, CurrentSpeed);
         }
         
         protected void RecoverEnergy()

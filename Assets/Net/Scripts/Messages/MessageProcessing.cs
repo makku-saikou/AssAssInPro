@@ -22,6 +22,7 @@ namespace Net.Scripts.Messages
 					Events.Trigger(NetEvents.PlayerInput, playerInput);
 					break;
 				case C2CPlayerState playerState:
+					Debug.Log($"{playerState.PlayerId}, {playerState.Position}, {playerState.Rotation}, {playerState.Scale}");
 					Events.Trigger(NetEvents.PlayerState, playerState);
 					break;
 				default:

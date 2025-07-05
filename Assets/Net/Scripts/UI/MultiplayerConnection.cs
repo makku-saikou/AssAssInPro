@@ -2,6 +2,7 @@
 using Hmxs.Toolkit.Module.Events;
 using Net.Scripts.Core;
 using Net.Scripts.Messages;
+using Pditine.Data;
 using PurpleFlowerCore;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -84,6 +85,7 @@ namespace Net.Scripts.UI
 				rightMask.SetActive(false);
 				player2Text.SetActive(true);
 			}
+			DataManager.Instance.PassingData.netPlayerID = s2C.PlayerId;
 		}
 
 		private void S2CGameEstablishedCallback(S2CGameEstablished s2C)
