@@ -124,6 +124,8 @@ namespace Net.Scripts
         private void CheckPlayerDead(float hp, int playerID)
         {
             if (hp > 0) return;
+            var theLoser = playerID == 1 ? player1 : player2;
+            theLoser.BeDestroy();
             if (ClientID != 1) return;
             TcpClientManager.Instance.SendMessage(new C2SGameOver());
         }
