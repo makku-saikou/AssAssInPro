@@ -4987,8 +4987,8 @@ MonoBehaviour:
   leftMask: {fileID: 216726431137085079}
   rightMask: {fileID: 1690583504}
   loadingMask: {fileID: 1410814066}
-  player1Text: {fileID: 0}
-  player2Text: {fileID: 0}
+  player1Text: {fileID: 495067018}
+  player2Text: {fileID: 1392775575}
   loadingTimeout: 10
   isJoiningGame: 0
 --- !u!224 &8863430313062284656
