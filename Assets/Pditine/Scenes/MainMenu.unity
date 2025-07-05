@@ -4525,7 +4525,7 @@ PrefabInstance:
       objectReference: {fileID: 1450477115}
     - target: {fileID: 7870104742719802660, guid: 4865382b36d1273449e501fac75a6294, type: 3}
       propertyPath: m_Text
-      value: 0.8.5_Beta
+      value: 0.8.6_Beta_Net
       objectReference: {fileID: 0}
     - target: {fileID: 8910966953840360166, guid: 4865382b36d1273449e501fac75a6294, type: 3}
       propertyPath: url
