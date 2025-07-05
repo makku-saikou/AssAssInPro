@@ -1,4 +1,3 @@
-using System;
 using Hmxs.Toolkit.Module.Events;
 using Net.Scripts.Messages;
 using UnityEngine;
@@ -36,20 +35,26 @@ namespace Net.Scripts.Client
             Events.RemoveListener<C2CPlayerState>(NetEvents.PlayerState, PlayerStateCallback);
         }
 
-        // private void Update()
-        // {
-        //     _player.position = Vector3.Lerp(_player.position, _targetPosition, Time.deltaTime * _lerpSpeed); 
-        //     _player.rotation = Quaternion.Lerp(_player.rotation, _targetRotation, Time.deltaTime * _lerpSpeed);
-        //     _player.localScale = Vector3.Lerp(_player.localScale, _targetScale, Time.deltaTime * _lerpSpeed);
-        // }
+        private void Update()
+        {
+            UpdateTransform();
+        }
+
+        private void UpdateTransform()
+        {
+            if (Vector3.SqrMagnitude(_player.position - new Vector3(_targetPosition.x, _targetPosition.y, _player.position.z)) > 0.01f)
+                _player.position = Vector3.Lerp(_player.position, _targetPosition, Time.deltaTime * _lerpSpeed); 
+            // _player.rotation = Quaternion.Lerp(_player.rotation, _targetRotation, Time.deltaTime * _lerpSpeed);
+            // _player.localScale = Vector3.Lerp(_player.localScale, _targetScale, Time.deltaTime * _lerpSpeed);
+        }
 
         private void PlayerStateCallback(C2CPlayerState msg)
         {
             if (msg.PlayerId != _playerId) return;
-            // _targetPosition = msg.Position;
+            _targetPosition = msg.Position;
             // _targetRotation = msg.Rotation;
             // _targetScale = msg.Scale;
-            _player.position = msg.Position;
+            // _player.position = msg.Position;
             _player.rotation = msg.Rotation;
             _player.localScale = msg.Scale;
             Debug.Log($"Player {_playerId} state updated: Position={_targetPosition}, Rotation={_targetRotation}, Scale={_targetScale}");
