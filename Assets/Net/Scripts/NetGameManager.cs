@@ -76,6 +76,7 @@ namespace Net.Scripts
 
         private void OnEnable()
         {
+            Events.AddListener<S2CGameOver>(NetEvents.GameOver, GameOverCallback);
             if(ClientID == 2)
                 Events.AddListener<C2CPlayerHP>(NetEvents.PlayerHP,  PlayerHPReceiveCallback); 
         }
@@ -122,8 +123,13 @@ namespace Net.Scripts
         private void CheckPlayerDead(float hp, int playerID)
         {
             if (hp > 0) return;
+            if (ClientID != 1) return;
+            TcpClientManager.Instance.SendMessage(new C2SGameOver());
+        }
+
+        private void GameOverCallback(S2CGameOver _)
+        {
             SceneSystem.LoadScene(0);
-            TcpClientManager.Instance.Disconnect();
         }
     }
 }

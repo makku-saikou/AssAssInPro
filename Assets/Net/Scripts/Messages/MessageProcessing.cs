@@ -28,6 +28,9 @@ namespace Net.Scripts.Messages
 				case C2CPlayerHP playerHP:
 					Events.Trigger(NetEvents.PlayerHP, playerHP);
 					break;
+				case S2CGameOver gameOver:
+					Events.Trigger(NetEvents.GameOver, gameOver);
+					break;
 				default:
 					Debug.LogWarning("Undispatched message type: " + message.GetType());
 					break;

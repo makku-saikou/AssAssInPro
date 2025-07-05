@@ -35,5 +35,12 @@ namespace Net.Scripts.Messages
 		public void Deserialize(ByteBuffer buffer) { }
 	}
 
+	public class S2CGameOver : INetworkMessage
+	{
+		public int MessageId => 2004;
 
+		public void Serialize(ByteBuffer buffer) { }
+
+		public void Deserialize(ByteBuffer buffer) { }
+	}
 }

@@ -8,6 +8,7 @@
 
 		public const string PlayerInput = "NetPlayerInput";
 		public const string PlayerState = "NetPlayerState";
+		public const string GameOver = "NetGameOver";
 		public const string PlayerHP = "NetPlayerHP";
 	}
 }
