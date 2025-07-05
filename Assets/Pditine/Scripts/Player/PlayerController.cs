@@ -166,7 +166,7 @@ namespace Pditine.Player
         public event Action<float, int> OnChangeHP; // 当前血量 玩家id
         public event Action OnDestroyed;
         public Action<Vector3> OnChangeCurrentDirection;
-
+        public event Action<Vector2, float> OnDash;
         
         #endregion
 
@@ -207,7 +207,11 @@ namespace Pditine.Player
         protected virtual void OnUpdate()
         {
             if (InputHandler is null) return;
-            if (InputHandler.Dash) Dash();
+            if (InputHandler.Dash)
+            {
+                Dash();
+                OnDash?.Invoke(CurrentDirection, CurrentSpeed);
+            }
             if (InputHandler.Charge) 
                 Charge(); 
             else 
